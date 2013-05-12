@@ -1,5 +1,5 @@
 namespace "static-data" do
-  desc "Install all static data from db/static_data"
+  desc "Install all static data from db/static-data"
   task :install => :environment do
     require "static-data"
 

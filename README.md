@@ -52,13 +52,13 @@ file should be named after the model:
 
 Install your static data:
 
-    rake static_data:install
+    rake static-data:install
 
 Enjoy!
 
 ## Limitations
 
-The current static_data:install task blows away any existing data 
+The current static-data:install task blows away any existing data 
 already present in the model's table before installing, so any
 non-static data in the table will be nuked. It would be nice to 
 offer another task that simply ensures that all static data is
