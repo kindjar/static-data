@@ -7,13 +7,13 @@ Gem::Specification.new do |spec|
   spec.name          = "static-data"
   spec.version       = StaticData::VERSION
   spec.authors       = ["Ben Turner"]
-  spec.email         = ["bjturner@outofcoffee.com"]
+  spec.email         = ["codewrangler@outofcoffee.com"]
   spec.description   = %q{Rails plugin to manage static data in ActiveRecord 
       models/tables}
   spec.summary       = %q{StaticData is a Rails plugin that lets you easily 
       manage fixed data that you want to always have in your database, and 
       is primarily useful for pre-populating lookup tables and the like.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/kindjar/static-data"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
