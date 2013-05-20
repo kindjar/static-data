@@ -41,9 +41,28 @@ module StaticData
       self.rows.each do |row|
         row_class.create!(Hash[cols.zip(row)], :without_protection => true)
       end
+      return {:created => self.rows.size}
     end
 
-    # def self.update
-    # end
+    # Creates new records for all of the data returned by the `rows` method
+    # of the StaticData subclass -- unless they exist already.
+    def self.update
+      created = 0
+      existing = 0
+      cols = self.columns
+      row_class = self.model_class
+      self.rows.each do |row|
+        attribs = Hash[cols.zip(row)]
+        row_class.transaction do
+          if row_class.exists?(attribs)
+            existing += 1
+          else
+            row_class.create!(attribs, :without_protection => true)
+            created += 1
+          end
+        end
+      end
+      return {:created => created, :existing => existing}
+    end
   end
 end

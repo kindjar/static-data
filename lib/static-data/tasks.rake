@@ -1,31 +1,42 @@
 namespace "static-data" do
+
   desc "Install all static data from db/static-data"
   task :install => :environment do
     require "static-data"
 
-    Dir.glob('db/static-data/*') do |file|
-      basename = File.basename(file).split('.', 2).first
-      expected_class_name = "Static" + basename.
-          camelize
+    StaticData.static_data_classes(Rails.root) do |static_data_class|
+      StaticData.report_duration("== #{static_data_class}: installing", 
+          "== #{static_data_class}: installed (%0.4fs)") do
 
-      start = Time.now
-      puts "== #{expected_class_name}: installing"
+        StaticData.report_duration("-- reset", "   -> %0.4fs") do
+          static_data_class.reset
+        end        
 
-      require "#{Rails.root}/db/static-data/#{basename}"
-      Object.const_get(expected_class_name).tap do |static_data_class|
-        step_start = Time.now
-        puts "-- reset"
-        static_data_class.reset
-        puts "   -> %0.4fs" % [(Time.now - step_start)]
-
-        step_start = Time.now
-        puts "-- install"
-        static_data_class.install
-        puts "   -> %0.4fs" % [(Time.now - step_start)]
+        StaticData.report_duration("-- install", "   -> %0.4fs") do
+          static_data_class.install
+        end
       end
 
-      puts "== #{expected_class_name}: installed (%0.4fs)" % [(Time.now - start)]
-      puts
+      puts    # add blank line separator
     end
   end
+
+  desc "Update any missing static data table rows from db/static-data"
+  task :update => :environment do
+    require "static-data"
+
+    StaticData.static_data_classes(Rails.root) do |static_data_class|
+      StaticData.report_duration("== #{static_data_class}: updating", 
+          "== #{static_data_class}: updating (%0.4fs)") do
+
+        StaticData.report_duration("-- update", "   -> %0.4fs") do
+          results = static_data_class.update
+          puts "   -> existing: #{results[:existing]}; added: #{results[:created]}"
+        end
+      end
+
+      puts    # add blank line separator
+    end
+  end
+
 end

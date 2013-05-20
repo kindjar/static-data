@@ -6,10 +6,14 @@ useful for pre-populating lookup tables and the like. It consists of
 a simple framework for describing your static data and a Rake task 
 for ensuring that your static data is installed in your database.
 
+While you can use migrations to do this, you can't referencing models
+in migrations can get you into trouble, and it can be awkward to 
+update static data in migrations later.
+
 It doesn't do much, but it's awfully handy to have a simple way of
-adding lookup table data to your database. Anything that makes it 
-easier to set up a brand new database from scratch is a win in my
-book.
+adding lookup table data to your database. And with StaticData, you 
+can easily add new data and make it easy for to get everyone's 
+database in sync with the latest static data (even production).
 
 ## Installation
 
@@ -32,7 +36,9 @@ Create a db/static-data directory in your app:
     mkdir db/static-data
 
 Create a file for each model that you want to store static for. The
-file should be named after the model:
+file should be named after the model. Implement two class methods, `columns`
+and `rows`. The `columns` method should return the names of the columns in the 
+order their data appears in the `rows`
 
     # For a model named ImageType:
     cat > db/static-data/image_type.rb <<EOF 
@@ -58,18 +64,8 @@ Enjoy!
 
 ## Limitations
 
-The current static-data:install task blows away any existing data 
-already present in the model's table before installing, so any
-non-static data in the table will be nuked. It would be nice to 
-offer another task that simply ensures that all static data is
-present without deleting other data. I consider that a TODO, but
-am happy to receive pull requests.
-
-If you have existing data in your tables and use foreign key 
-constraints (which do go hand-in-hand with lookup tables), you
-probably don't want to run this rake task, because it will either 
-fail or cause delete cascades, depending on how you've set up your
-constraints. Fixing the above item should hopefully fix this, too.
+StaticData isn't designed for large volumes of data and performance may be poor
+on large static data sets.
 
 ## Contributing
 
