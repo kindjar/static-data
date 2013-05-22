@@ -27,7 +27,7 @@ namespace "static-data" do
 
     StaticData.static_data_classes(Rails.root) do |static_data_class|
       StaticData.report_duration("== #{static_data_class}: updating", 
-          "== #{static_data_class}: updating (%0.4fs)") do
+          "== #{static_data_class}: updated (%0.4fs)") do
 
         StaticData.report_duration("-- update", "   -> %0.4fs") do
           results = static_data_class.update
