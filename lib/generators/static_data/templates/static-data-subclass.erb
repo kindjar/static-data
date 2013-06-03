@@ -1,0 +1,12 @@
+class Static<%= class_name %> < StaticData::Base
+  def self.columns
+    [:col1, :col2, :col3]
+  end
+
+  def self.rows
+    [
+      ['col1value1', 'col2value1', 'col3value1'],
+      ['col1value2', 'col2value2', 'col3value2'],
+    ]
+  end
+end

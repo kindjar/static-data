@@ -1,3 +1,8 @@
+# 0.3.0
+
+* Add a rails generator for creating a new static data model.
+* Update docs to demonstrate `update` rake task and new generator.
+
 # 0.2.0
 
 * Add support for incrementally updating tables rather than merely deleting all 
