@@ -1,6 +1,6 @@
 require 'static-data'
 require 'rails'
-module YourGem
+module StaticData
   class Railtie < Rails::Railtie
     rake_tasks do
       require 'rake'
