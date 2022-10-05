@@ -55,7 +55,7 @@ after the model. The class name should match the model name, but with the word
       def self.columns
       end
 
-      def self.row
+      def self.rows
       end
     end
 
@@ -70,7 +70,7 @@ data appears in the `rows`
         [:name, :mime_type, :extension]
       end
 
-      def self.row
+      def self.rows
       [
         ['PNG', 'image/png', 'png'],
         ['JPEG', 'image/jpeg', 'jpg'],
